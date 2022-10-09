@@ -1,3 +1,5 @@
+const { get, set } = require("lodash");
+
 class Hangman {
   constructor(_canvas) {
     if (!_canvas) {
@@ -30,13 +32,23 @@ class Hangman {
    * @param {string} difficulty a difficulty string to be passed to the getRandomWord Function
    * @param {function} next callback function to be called after a word is reveived from the API.
    */
-  start(difficulty, next) {
+  async start(difficulty, next) {
     // get word and set it to the class's this.word
     // clear canvas
     // draw base
     // reset this.guesses to empty array
     // reset this.isOver to false
     // reset this.didWin to false
+    this.word = await this.getRandomWord(difficulty);
+    this.word = this.word.toLowerCase();
+   //this.word = 'testing'.toLowerCase();
+    this.clearCanvas();
+    this.drawBase();
+    this.guesses = [];
+    this.wrongGuesses = 0;
+    this.isOver = false;
+    this.didWin = false;
+     next();
   }
 
   /**
@@ -53,11 +65,59 @@ class Hangman {
     // check if the word includes the guessed letter:
     //    if it's is call checkWin()
     //    if it's not call onWrongGuess()
+
+    this.error = '';
+    if (letter === '' || letter === null){
+      this.error = 'Please enter a letter to guess with';
+    }
+    // Check for invalid cases (numbers, symbols, ...) throw an error if it is
+    else if(!/^[a-zA-Z]+$/.test(letter)){
+      this.error = 'Only letters A-Z can be accepted';
+    }
+    // Check if more than one letter was provided. throw an error if it is.
+    else if(letter.trim().length > 1){
+      this.error = 'You may only guess one letter at a time'
+    }
+    // if it's a letter, convert it to lower case for consistency.
+    else{
+      let character = letter.toLowerCase();
+       // check if this.guesses includes the letter. Throw an error if it has been guessed already.
+       if(this.guesses.includes(character)){
+         this.error = 'You have already guessed this letter';
+       }
+       else{
+            // add the new letter to the guesses array.
+         this.guesses.push(character)
+             // check if the word includes the guessed letter:
+         if(this.word.includes(character)){
+               //    if it's is call checkWin()
+           this.checkWin();
+         }
+         else{
+              //    if it's not call onWrongGuess()
+           this.onWrongGuess();
+         }
+       }
+    }
   }
 
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
     // if zero, set both didWin, and isOver to true
+    let correctChars = 0;
+    let totalChars = this.uniqueCharCount(this.word);
+    var s;
+    for(s of this.guesses){
+  if(this.word.includes(s)){
+  correctChars++
+    }
+  }
+  let remainingUnknowns = totalChars - correctChars;
+  // if zero, set both didWin, and isOver to true
+  if(remainingUnknowns == 0){
+  this.didWin = true;
+  this.isOver = true;
+  }
   }
 
   /**
