@@ -157,7 +157,20 @@ class Hangman {
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
   getWordHolderText() {
-    return;
+  var  wordHolderArray = [];
+   var tempLetter = '';
+   var i;
+   for (i = 0; i < this.word.length; i++) 
+    {
+     tempLetter = this.word.charAt(i);
+     if(this.guesses.includes(tempLetter)){
+        wordHolderArray.push(tempLetter);
+       }
+       else{
+        wordHolderArray.push('_');
+       }
+      }
+      return wordHolderArray.join(' ');
   }
 
   /**
@@ -167,7 +180,8 @@ class Hangman {
    * Hint: use the Array.prototype.join method.
    */
   getGuessesText() {
-    return ``;
+    let text = `Previous Guesses: ${this.guesses.join(', ')}`;
+    return text;
   }
 
   /**
@@ -187,15 +201,29 @@ class Hangman {
     this.ctx.fillRect(10, 410, 175, 10); // Base
   }
 
-  drawHead() {}
+  drawHead() {
+    this.ctx.beginPath(); 
+    this.ctx.arc(180,120,23,0,Math.PI*2,false); 
+    this.ctx.closePath(); 
+    this.ctx.stroke(); }
 
-  drawBody() {}
+  drawBody() {this.ctx.moveTo(180,143); 
+    this.ctx.lineTo(180,248); 
+    this.ctx.stroke(); }
 
-  drawLeftArm() {}
+  drawLeftArm() {this.ctx.moveTo(180,175); 
+    this.ctx.lineTo(142,167); 
+    this.ctx.stroke(); }
 
-  drawRightArm() {}
+  drawRightArm() {this.ctx.moveTo(180,175); 
+    this.ctx.lineTo(218,167); 
+    this.ctx.stroke(); }
 
-  drawLeftLeg() {}
+  drawLeftLeg() {this.ctx.moveTo(180,245); 
+    this.ctx.lineTo(145,270); 
+    this.ctx.stroke(); }
 
-  drawRightLeg() {}
+  drawRightLeg() {this.ctx.moveTo(180,245); 
+    this.ctx.lineTo(215,270); 
+    this.ctx.stroke(); }
 }
