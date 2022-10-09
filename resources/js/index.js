@@ -57,14 +57,40 @@ let game;
   //      3. show the resetGame button
   // if the game is won or lost, show an alert.
   guessForm.addEventListener(`submit`, function (e) {
+    errorMess.classList.add("hidden");
+    game.guess(guessInput.value);
+    if(game.error == ''){
+    wordHolderText.innerText = game.getWordHolderText();
+    guessesText.innerText = game.getGuessesText();
+    guessInput.value = '';
+    if(game.isOver){
+      guessInput.disabled = true;
+      guessSubmitButton.disabled = true;
+      resetGame.classList.remove('hidden');
+      if(game.didWin){
+        alert('You win!');
+      }
+      else{
+      alert('You have lost. Sorry!');
+      }
+    }
+  }
+  else{
+    errorMess.classList.remove("hidden");
+    errorMess.innerText = game.error;
+  }
 
   });
 
   // add a click Event Listener to the resetGame button
   //    show the startWrapper
   //    hide the gameWrapper
-  resetGame.addEventListener(`click`, function (e) {});
-} catch (error) {
-  console.error(error);
-  alert(error);
-}
+  resetGame.addEventListener(`click`, function (e) {
+    startWrapper.classList.remove('hidden');
+    gameWrapper.classList.add('hidden');
+    resetGame.classList.add('hidden');
+    });
+  } catch (error) {
+    console.error(error);
+    alert(error);
+  }
