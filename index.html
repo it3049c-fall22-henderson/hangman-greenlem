@@ -12,7 +12,7 @@
     <body>
         <h1>Hangman</h1>
         <div id="startWrapper">
-            <form id="difficultySelect">
+            <form id="difficultySelect" onsubmit="return false">
                 <select id="difficulty">
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -21,14 +21,18 @@
                 <input type="submit" value="Start!" />
             </form>
         </div>
+        <div>
+            <p id='city'> </p>
+        </div>
         <div id="gameWrapper" class="hidden">
-            <form id="guessForm">
+            <form id="guessForm" onsubmit="return false">
                 <input
                     type="text"
                     id="guessInput"
                     placeholder="Guess a letter!"
                 />
                 <input type="submit" id="guessSubmitButton" value="Guess" />
+                <p id="errorMessage" class="hidden" style="color: red;"></p>
             </form>
             <button type="button" id="resetGame" class="hidden">
                 Play Again!
