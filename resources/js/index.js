@@ -11,6 +11,8 @@ const wordHolderText = document.getElementById(`wordHolder`);
 // GUESSING FORM
 const guessForm = document.getElementById(`guessForm`);
 const guessInput = document.getElementById(`guessInput`);
+const guessSubmitButton = document.getElementById('guessSubmitButton')
+const errorMess = document.getElementById('errorMessage')
 
 // GAME RESET BUTTON
 const resetGame = document.getElementById(`resetGame`);

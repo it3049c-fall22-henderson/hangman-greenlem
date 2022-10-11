@@ -55,17 +55,7 @@ class Hangman {
    *
    * @param {string} letter the guessed letter.
    */
-  guess(letter) {
-    // Check if nothing was provided and throw an error if so
-    // Check for invalid cases (numbers, symbols, ...) throw an error if it is
-    // Check if more than one letter was provided. throw an error if it is.
-    // if it's a letter, convert it to lower case for consistency.
-    // check if this.guesses includes the letter. Throw an error if it has been guessed already.
-    // add the new letter to the guesses array.
-    // check if the word includes the guessed letter:
-    //    if it's is call checkWin()
-    //    if it's not call onWrongGuess()
-
+   guess(letter) {
     this.error = '';
     if (letter === '' || letter === null){
       this.error = 'Please enter a letter to guess with';
@@ -99,6 +89,7 @@ class Hangman {
          }
        }
     }
+   
   }
 
   checkWin() {
@@ -118,6 +109,17 @@ class Hangman {
   this.didWin = true;
   this.isOver = true;
   }
+  }
+
+  uniqueCharCount(word){
+    let buffer = "";
+    let i;
+    for (i = 0; i < word.length; i++) {
+        if (!buffer.includes(String.valueOf(word.charAt(i)))) {
+            buffer += word.charAt(i);
+        }
+    }
+    return buffer.length;
   }
 
   /**
