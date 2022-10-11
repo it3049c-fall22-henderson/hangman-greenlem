@@ -1,4 +1,4 @@
-const { get, set } = require("lodash");
+//const { get, set } = require("lodash");
 
 class Hangman {
   constructor(_canvas) {
