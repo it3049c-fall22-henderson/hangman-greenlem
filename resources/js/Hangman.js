@@ -21,7 +21,7 @@ class Hangman {
    * */
   getRandomWord(difficulty) {
     return fetch(
-      `https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=${difficulty}`
+      `https://hangman-micro-service.herokuapp.com/.sh?difficulty=${difficulty}`
     )
       .then((r) => r.json())
       .then((r) => r.word);
