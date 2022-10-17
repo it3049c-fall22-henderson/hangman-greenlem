@@ -20,6 +20,8 @@ const resetGame = document.getElementById(`resetGame`);
 // CANVAS
 let canvas = document.getElementById(`hangmanCanvas`);
 
+const city = document.getElementById('cityDisplay');
+
 // The following Try-Catch Block will catch the errors thrown
 try {
   // Instantiate a game Object using the Hangman class.
