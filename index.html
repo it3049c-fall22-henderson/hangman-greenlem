@@ -10,6 +10,43 @@
     </head>
 
     <body>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+        <script type="text/javascript">
+            if('geolocation' in navigator){
+                console.log("geolocation available");
+                navigator.geolocation.getCurrentPosition(function(position){
+                    console.log(position.coords);
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    var coordinates = [lat, lng]; 
+                    var latitude = "latitude=" + position.coords.latitude;
+      
+                    var longitude = "&longitude=" + position.coords.longitude;
+      var query = latitude + longitude + "&localityLanguage=en";
+
+      const Http = new XMLHttpRequest();
+
+      var bigdatacloud_api =
+        "https://api.bigdatacloud.net/data/reverse-geocode-client?";
+
+      bigdatacloud_api += query;
+
+      Http.open("GET", bigdatacloud_api);
+      Http.send();
+
+      Http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var myObj = JSON.parse(this.responseText);
+          console.log(myObj);
+          document.getElementById('city').innerText = "Your City: " + myObj.locality;
+        }
+      };
+                })
+            }
+            else{
+                console.log("geoloactaion not available");
+            }
+        </script>
         <h1>Hangman</h1>
         <div id="startWrapper">
             <form id="difficultySelect" onsubmit="return false">
@@ -20,6 +57,9 @@
                 </select>
                 <input type="submit" value="Start!" />
             </form>
+        </div>
+        <div>
+            <p id='city'> </p>
         </div>
         <div id="gameWrapper" class="hidden">
             <form id="guessForm" onsubmit="return false">
